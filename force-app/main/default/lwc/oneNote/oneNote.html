@@ -28,11 +28,25 @@
     </div>
     <template if:true={showModal}>
         <c-modal>
-            <h1 slot="header" class="slds-modal__title">Modal Heading</h1>
-            <div>I am a body</div>
+            <h1 slot="header" class="slds-modal__title">Add Note</h1>
+            <form>
+                <lightning-input type="text" name="Name" value={noteRecord.Name} label="Title" 
+                class="slds-m-bottom_medium" onchange={changeHandler}></lightning-input>
+
+                <lightning-input-rich-text
+                value={noteRecord.Description__c}
+                name="Description__c"
+                label="Description"
+                label-visible
+                formats={formats}
+                onchange={changeHandler}>
+            </lightning-input-rich-text>
+
+            </form>
+
             <footer slot="footer">
                 <button class="slds-button slds-button_neutral" onclick={closeModalHandler}>Cancel</button>
-                <button class="slds-button slds-button_brand">Save</button>
+                <button class="slds-button slds-button_brand" onclick={submitHandler} disabled={isFormInvalid}>Save</button>
             </footer>
         </c-modal>
     </template>
