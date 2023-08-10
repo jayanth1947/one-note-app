@@ -1,12 +1,17 @@
 :host(){
     --dark-blue:#022451;
     --white:#fff;
+    --dark-grey:#cecece;
+    --light-blue:#0076d3;
+    --light-red:#e91515;
 }
 .app{
     background: var(--dark-blue);
     min-height: 100vh;
     font-size: 16px;
     padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
 }
 .box{  
     height: 300px;
@@ -33,9 +38,44 @@
 h2{
     font-size: 20px;
     font-weight: 700;
-    margin-top: 12px;
 }
 
 .custom-icon{
     --slds-c-icon-color-foreground-default: var(--dark-blue);
+}
+.edit-icon{
+    --slds-c-icon-color-background:var(--dark-blue);
+}
+.delete-icon{
+    --slds-c-icon-color-background:var(--light-red);
+}
+
+header{
+    background: var(--light-blue);
+    color: var(--white);
+    padding: 4px 16px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.notes{
+    height: 221px;
+    overflow: auto;
+    padding: 4px 16px;
+}
+
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 16px;
+    background: var(--dark-grey);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.date{
+    font-size: 14px;
+    font-style: italic;
+    color: gray;
 }
