@@ -54,8 +54,17 @@ export default class OneNote extends LightningElement {
     createNote(){
         createNoteRecord({title:this.noteRecord.Name, description:this.noteRecord.Description__c}).then(()=>{
             this.showModal=false;
+            this.showToastMsg("Note Created Successfully",'success')
         }).catch(error=>{
             console.error("error",error.message.body);
+            this.showToastMsg(error.message.body,'error')
         })
+    }
+
+    showToastMsg(message,variant){
+        const element =this.template.querySelector('c-oneNoteNotification')
+        if(element){
+            element.showToast(message,variant)
+        }
     }
 }
