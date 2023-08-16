@@ -1,5 +1,5 @@
 import { LightningElement } from 'lwc';
-
+import createNoteRecord from '@salesforce/apex/oneNoteController.createNoteRecord';
 
 const DEFAULT_NOTE_FORM={
     Name:"",
@@ -48,5 +48,14 @@ export default class OneNote extends LightningElement {
     submitHandler(event){
         event.preventDefault();
         console.log("this.noteRecord", JSON.stringify( this.noteRecord))
+        this.createNote()
+    }
+
+    createNote(){
+        createNoteRecord({title:this.noteRecord.Name, description:this.noteRecord.Description__c}).then(()=>{
+            this.showModal=false;
+        }).catch(error=>{
+            console.error("error",error.message.body);
+        })
     }
 }
