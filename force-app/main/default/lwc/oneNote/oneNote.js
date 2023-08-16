@@ -3,6 +3,8 @@ import createNoteRecord from '@salesforce/apex/oneNoteController.createNoteRecor
 import getNotes from '@salesforce/apex/oneNoteController.getNotes';
 import updateNoteRecord from '@salesforce/apex/oneNoteController.updateNoteRecord';
 import {refreshApex} from '@salesforce/apex';
+import LightningConfirm from 'lightning/confirm'
+import deleteNoteRecord from '@salesforce/apex/oneNoteController.deleteNoteRecord';
 const DEFAULT_NOTE_FORM={
     Name:"",
     Description__c	:""
@@ -131,5 +133,38 @@ export default class OneNote extends LightningElement {
 
     refresh(){
         return refreshApex(this.wireNoteResult)
+    }
+
+    deleteNoteHandler(event){
+        this.selectedRecordId=event.target.dataset.recordid
+        this.handleConfirm()
+    }
+
+    async handleConfirm(){
+        const result= await LightningConfirm.open({
+            message :"Are you sure you want to delete this note ?",
+            variant:'headerless',
+            label:'Delete Confirmation'
+        })
+
+        if(result){
+            this.deleteHandler()
+        }
+        else{
+            this.selectedRecordId=null
+        }
+    }
+
+    deleteHandler(){
+        deleteNoteRecord({noteId:this.selectedRecordId}).then(()=>{
+            this.showModal=false
+            this.selectedRecordId=null
+            this.showToastMsg("Note Deleted Successfully",'success')
+            this.refresh()
+
+        }).catch(error=>{
+            console.error("Error in Deletion",error);
+            this.showToastMsg(error.message.body,'error')
+        })
     }
 }
