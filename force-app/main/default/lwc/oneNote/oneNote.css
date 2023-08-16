@@ -79,3 +79,7 @@ header{
     font-style: italic;
     color: gray;
 }
+
+.cursor{
+    cursor: pointer;
+}

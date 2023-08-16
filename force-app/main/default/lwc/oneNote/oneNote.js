@@ -1,6 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import createNoteRecord from '@salesforce/apex/oneNoteController.createNoteRecord';
 import getNotes from '@salesforce/apex/oneNoteController.getNotes';
+import updateNoteRecord from '@salesforce/apex/oneNoteController.updateNoteRecord';
 const DEFAULT_NOTE_FORM={
     Name:"",
     Description__c	:""
@@ -10,6 +11,7 @@ export default class OneNote extends LightningElement {
     showModal=false
     noteRecord=DEFAULT_NOTE_FORM
     noteList=[]
+    selectedRecordId
     formats = [
         'font',
         'size',
@@ -31,6 +33,10 @@ export default class OneNote extends LightningElement {
         return !(this.noteRecord && this.noteRecord.Name && this.noteRecord.Description__c)
     }
 
+    get modalName(){
+        return this.selectedRecordId ? "Update Note":"Add Note"
+
+    }
     @wire(getNotes)
     noteListInfo({data,error}){
         if(data){
@@ -53,6 +59,7 @@ export default class OneNote extends LightningElement {
     closeModalHandler(){
         this.showModal=false
         this.noteRecord=DEFAULT_NOTE_FORM
+        this.selectedRecordId=null
     }
 
     changeHandler(event){
@@ -65,7 +72,14 @@ export default class OneNote extends LightningElement {
     submitHandler(event){
         event.preventDefault();
         console.log("this.noteRecord", JSON.stringify( this.noteRecord))
-        this.createNote()
+        if(this.selectedRecordId){
+            this.updateNote(this.selectedRecordId)
+        }
+        else{
+            this.createNote()
+        }
+        
+       
     }
 
     createNote(){
@@ -83,5 +97,27 @@ export default class OneNote extends LightningElement {
         if(element){
             element.showToast(message,variant)
         }
+    }
+
+    editNoteHandler(event){
+       const {recordid}= event.target.dataset
+       const noteRecord=this.noteList.find(item=>item.Id === recordid)
+       this.noteRecord={
+           Name:noteRecord.Name,
+           Description__c:noteRecord.Description__c
+       }
+       this.selectedRecordId=recordid
+       this.showModal=true
+    }
+
+    updateNote(noteId){
+        const {Name,Description__c}=this.noteRecord
+        updateNoteRecord({"noteId":noteId,"title":Name,"description":Description__c}).then(()=>{
+            this.showModal=false
+            this.showToastMsg("Note Updated Successfully!",'success')
+        }).catch(error=>{
+            console.error("Error in updating",error);
+            this.showToastMsg(error.message.body,'error')
+        })
     }
 }
