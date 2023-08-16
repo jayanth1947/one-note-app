@@ -12,4 +12,9 @@ public with sharing class oneNoteController {
            throw new AuraHandledException(e.getMessage());
        }
    }
+
+   @AuraEnabled(cacheable=true)
+   public static List<My_Note__c> getNotes(){
+       return [SELECT Id,Name,Description__c, LastModifiedDate FROM My_Note__c ORDER BY LastModifiedDate DESC];
+   }
 }
