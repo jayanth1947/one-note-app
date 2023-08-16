@@ -1,6 +1,6 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import createNoteRecord from '@salesforce/apex/oneNoteController.createNoteRecord';
-
+import getNotes from '@salesforce/apex/oneNoteController.getNotes';
 const DEFAULT_NOTE_FORM={
     Name:"",
     Description__c	:""
@@ -9,6 +9,7 @@ export default class OneNote extends LightningElement {
 
     showModal=false
     noteRecord=DEFAULT_NOTE_FORM
+    noteList=[]
     formats = [
         'font',
         'size',
@@ -29,6 +30,22 @@ export default class OneNote extends LightningElement {
     get isFormInvalid(){
         return !(this.noteRecord && this.noteRecord.Name && this.noteRecord.Description__c)
     }
+
+    @wire(getNotes)
+    noteListInfo({data,error}){
+        if(data){
+            console.log("data of notes",JSON.stringify(data));
+            this.noteList= data.map(item=>{
+                let formatedDate =new Date(item.LastModifiedDate).toDateString()
+                return {...item,formatedDate}
+            })
+        }
+        if(error){
+            console.error("error in fetching",error);
+            this.showToastMsg(error.message.body,'error')
+        }
+    }
+
     createNoteHandler(){
         this.showModal=true
     }
