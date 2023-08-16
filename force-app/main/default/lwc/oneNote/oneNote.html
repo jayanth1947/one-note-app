@@ -13,7 +13,7 @@
                     <h2 class="slds-truncate">{note.Name}</h2>
                 </header>
                 <div class="notes">
-                    {note.Description__c}
+                    <c-append-note-html result={note.Description__c}></c-append-note-html>
                 </div>
                 <footer class="footer">
                     <div class="date"> 
@@ -29,7 +29,7 @@
         </template>    
     </div>
 
-    
+
     <template if:true={showModal}>
         <c-modal>
             <h1 slot="header" class="slds-modal__title">Add Note</h1>
