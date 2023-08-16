@@ -1,4 +1,4 @@
-public with sharing class oneNoteController {
+public without sharing class oneNoteController {
    @AuraEnabled
    public static Boolean createNoteRecord(String title,String description){
        try {
