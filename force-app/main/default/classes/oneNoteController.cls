@@ -33,4 +33,19 @@ public with sharing class oneNoteController {
            throw new AuraHandledException(e.getMessage());
        }
    }
+
+   @AuraEnabled
+   public static Boolean deleteNoteRecord(String noteId){
+       try {
+           if(!String.isBlank(noteId)){
+               My_Note__c noteRec = new My_Note__c(Id=noteId);
+               delete noteRec;
+               return true;
+           }
+           
+           return false;
+       } catch (Exception e) {
+           throw new AuraHandledException(e.getMessage());
+       }
+   }
 }
