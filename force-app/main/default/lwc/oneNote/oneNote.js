@@ -2,6 +2,7 @@ import { LightningElement, wire } from 'lwc';
 import createNoteRecord from '@salesforce/apex/oneNoteController.createNoteRecord';
 import getNotes from '@salesforce/apex/oneNoteController.getNotes';
 import updateNoteRecord from '@salesforce/apex/oneNoteController.updateNoteRecord';
+import {refreshApex} from '@salesforce/apex';
 const DEFAULT_NOTE_FORM={
     Name:"",
     Description__c	:""
@@ -12,6 +13,7 @@ export default class OneNote extends LightningElement {
     noteRecord=DEFAULT_NOTE_FORM
     noteList=[]
     selectedRecordId
+    wireNoteResult
     formats = [
         'font',
         'size',
@@ -38,7 +40,9 @@ export default class OneNote extends LightningElement {
 
     }
     @wire(getNotes)
-    noteListInfo({data,error}){
+    noteListInfo(result){
+        this.wireNoteResult=result
+        const {data,error}=result
         if(data){
             console.log("data of notes",JSON.stringify(data));
             this.noteList= data.map(item=>{
@@ -85,7 +89,9 @@ export default class OneNote extends LightningElement {
     createNote(){
         createNoteRecord({title:this.noteRecord.Name, description:this.noteRecord.Description__c}).then(()=>{
             this.showModal=false;
+            this.selectedRecordId=null;
             this.showToastMsg("Note Created Successfully",'success')
+            this.refresh()
         }).catch(error=>{
             console.error("error",error.message.body);
             this.showToastMsg(error.message.body,'error')
@@ -114,10 +120,16 @@ export default class OneNote extends LightningElement {
         const {Name,Description__c}=this.noteRecord
         updateNoteRecord({"noteId":noteId,"title":Name,"description":Description__c}).then(()=>{
             this.showModal=false
+            this.selectedRecordId=null
             this.showToastMsg("Note Updated Successfully!",'success')
+            this.refresh()
         }).catch(error=>{
             console.error("Error in updating",error);
             this.showToastMsg(error.message.body,'error')
         })
+    }
+
+    refresh(){
+        return refreshApex(this.wireNoteResult)
     }
 }

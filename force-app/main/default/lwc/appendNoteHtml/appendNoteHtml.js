@@ -13,6 +13,9 @@ export default class AppendNoteHtml extends LightningElement {
 
     set result(data){
         this._result=data
+        if(this.loaded){
+            this.attachHtml()
+        }
     }
 
     renderedCallback(){
