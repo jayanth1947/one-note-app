@@ -1,28 +1,37 @@
 <template>
+    <!-- Notification component for OneNote -->
     <c-oneNoteNotification></c-oneNoteNotification>
     <div class="app">
+        <!-- Container for adding new notes -->
         <div class="box box-center" onclick={createNoteHandler}>
             <div class="dotted-circle">
+                <!-- Icon for adding a new note -->
                 <lightning-icon class="custom-icon" icon-name='utility:add' alternative-text='add' size='large' title='add'></lightning-icon>
             </div>
             <h2>Add New Note</h2>
         </div>
+        <!-- Loop through the list of notes -->
         <template for:each={noteList} for:item="note">
             <div class="box slds-var-m-bottom_medium" key={note.Id}>
                 <header>
+                    <!-- Display the note's title -->
                     <h2 class="slds-truncate">{note.Name}</h2>
                 </header>
                 <div class="notes">
+                    <!-- Component to append HTML content from note.Description__c -->
                     <c-append-note-html result={note.Description__c}></c-append-note-html>
                 </div>
                 <footer class="footer">
-                    <div class="date"> 
+                    <div class="date">
+                        <!-- Display formatted date --> 
                         {note.formatedDate}
                     </div>
                     <div>
+                        <!-- Edit icon for editing the note -->
                         <lightning-icon icon-name='action:edit' alternative-text='edit' class="edit-icon slds-var-m-right_x-small cursor" size='xx-small' title='edit note'
                            onclick={editNoteHandler}
                            data-recordid={note.Id} ></lightning-icon>
+                        <!-- Delete icon for deleting the note -->
                         <lightning-icon icon-name='action:delete' alternative-text='delete' class="delete-icon cursor" size='xx-small' title='delete note'
                         onclick={deleteNoteHandler}
                         data-recordid={note.Id}></lightning-icon>
@@ -33,14 +42,17 @@
         </template>    
     </div>
 
-
+    <!-- Modal for editing or creating a note -->
     <template if:true={showModal}>
         <c-modal>
+            <!-- Modal header with dynamic title -->
             <h1 slot="header" class="slds-modal__title">{modalName}</h1>
             <form>
+                <!-- Input field for note title -->
                 <lightning-input type="text" name="Name" value={noteRecord.Name} label="Title" 
                 class="slds-m-bottom_medium" onchange={changeHandler}></lightning-input>
 
+                <!-- Rich text editor for note description -->
                 <lightning-input-rich-text
                 value={noteRecord.Description__c}
                 name="Description__c"
@@ -52,6 +64,7 @@
 
             </form>
 
+            <!-- Rich text editor for note description -->
             <footer slot="footer">
                 <button class="slds-button slds-button_neutral" onclick={closeModalHandler}>Cancel</button>
                 <button class="slds-button slds-button_brand" onclick={submitHandler} disabled={isFormInvalid}>{modalName}</button>

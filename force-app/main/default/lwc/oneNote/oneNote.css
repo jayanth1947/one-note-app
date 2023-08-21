@@ -1,3 +1,4 @@
+/* Define custom CSS variables for color values */
 :host(){
     --dark-blue:#022451;
     --white:#fff;
@@ -5,6 +6,8 @@
     --light-blue:#0076d3;
     --light-red:#e91515;
 }
+
+/* Styling for the entire application container */
 .app{
     background: var(--dark-blue);
     min-height: 100vh;
@@ -13,6 +16,8 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+/* Styling for the individual boxes */
 .box{  
     height: 300px;
     width: 300px;
@@ -21,6 +26,7 @@
     margin: 12px;
 }
 
+/* Styling for the centered box */
 .box-center{
     display: flex;
     flex-direction: column;
@@ -29,27 +35,35 @@
     cursor: pointer;
 }
 
+/* Styling for the dotted circle */
 .dotted-circle{
     border: 2px solid #000;
     border-radius: 50%;
     padding: 16px ;
 }
 
+/* Styling for heading elements */
 h2{
     font-size: 20px;
     font-weight: 700;
 }
 
+/* Styling for custom icons */
 .custom-icon{
     --slds-c-icon-color-foreground-default: var(--dark-blue);
 }
+
+/* Styling for edit icon */
 .edit-icon{
     --slds-c-icon-color-background:var(--dark-blue);
 }
+
+/* Styling for delete icon */
 .delete-icon{
     --slds-c-icon-color-background:var(--light-red);
 }
 
+/* Styling for header section */
 header{
     background: var(--light-blue);
     color: var(--white);
@@ -58,12 +72,14 @@ header{
     border-top-right-radius: 12px;
 }
 
+/* Styling for notes section */
 .notes{
     height: 221px;
     overflow: auto;
     padding: 4px 16px;
 }
 
+/* Styling for footer section */
 .footer{
     display: flex;
     justify-content: space-between;
@@ -74,12 +90,14 @@ header{
     border-bottom-right-radius: 12px;
 }
 
+/* Styling for date element */
 .date{
     font-size: 14px;
     font-style: italic;
     color: gray;
 }
 
+/* Cursor style for elements */
 .cursor{
     cursor: pointer;
 }
