@@ -1,18 +1,23 @@
-# Salesforce DX Project: Next Steps
+# Note Taking App
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+A Note Taking App built using HTML, CSS, JavaScript, Lightning Web Components (LWC), and Apex programming in Salesforce.
 
-## How Do You Plan to Deploy Your Changes?
+## Features
+- Create, edit, and delete notes.
+- Modern UI using Lightning Web Components.
+- Backend functionality with Salesforce Apex.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+## Technologies
+- Frontend: HTML, CSS, JavaScript, Lightning Web Components (LWC)
+- Backend: Salesforce Apex Programming
+- Database: Salesforce Object Database
 
-## Configure Your Salesforce DX Project
+## Usage
+- Access the app through a Lightning App Page or Experience App.
+- Create a new note by providing a title and content.
+- Save the note to see it listed in the app.
+- Edit or delete notes using provided options.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+## Contributing
+Contributions are welcome! Feel free to report issues or submit pull requests.
 
-## Read All About It
-
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
