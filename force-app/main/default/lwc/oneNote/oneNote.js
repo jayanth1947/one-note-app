@@ -74,7 +74,6 @@ export default class OneNote extends LightningElement {
 
         // If there's an error, handle it
         if(error){
-            // If there's an error, handle it
             console.error("error in fetching",error);
             this.showToastMsg(error.message.body,'error')
         }
